@@ -33,7 +33,7 @@ for (y, x) in np.ndindex(SIZE_Y, SIZE_X):
         pixel_value |= data[idx_B + 1] >> 4
     else:
         pixel_value |= data[idx_B + 1] << 4
-        pixel_value |= data[idx_B] & 0xFF
+        pixel_value |= data[idx_B] & 0xF
     image_array[y, x] = pixel_value
 
 cset1 = plt.imshow(image_array, cmap="rainbow")
