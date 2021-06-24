@@ -24,8 +24,8 @@ public:
             width.SetToMaximum();
             height.SetToMaximum();
             // Set the pixel data format.
-            CEnumParameter(nodemap, "PixelFormat").SetValue("Mono12Packed");
-            // CEnumParameter(nodemap, "PixelFormat").SetValue("Mono12");
+            // CEnumParameter(nodemap, "PixelFormat").SetValue("Mono12Packed");
+            CEnumParameter(nodemap, "PixelFormat").SetValue("Mono12");
             // CEnumParameter(nodemap, "PixelFormat").SetValue("Mono8");
         } catch (const Pylon::GenericException& e) {
             throw RUNTIME_EXCEPTION(
@@ -52,7 +52,7 @@ int process() {
 
     CGrabResultPtr ptrGrabResult;
 
-    ofstream file("data_Mono12Packed.dat");
+    ofstream file("data_Mono12.dat");
 
     camera->StartGrabbing(1);
     while (camera->IsGrabbing()) {

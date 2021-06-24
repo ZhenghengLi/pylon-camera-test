@@ -29,12 +29,11 @@ for (y, x) in np.ndindex(SIZE_Y, SIZE_X):
     idx_b = start_bit % 8
     pixel_value = 0
     if (idx_b == 0):
-        # pixel_value = (data[idx_B + 1] & 0xFF00) << 4
-        pixel_value = data[idx_B] << 4
-        pixel_value += data[idx_B + 1] & 0xFF00
+        pixel_value |= data[idx_B] << 4
+        pixel_value |= data[idx_B + 1] >> 4
     else:
-        pixel_value = (data[idx_B + 1]) << 4
-        pixel_value += (data[idx_B] & 0xFF)
+        pixel_value |= data[idx_B + 1] << 4
+        pixel_value |= data[idx_B] & 0xFF
     image_array[y, x] = pixel_value
 
 cset1 = plt.imshow(image_array, cmap="rainbow")
