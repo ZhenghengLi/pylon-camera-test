@@ -1,4 +1,5 @@
 #include <ostream>
+#include <fstream>
 #include <pylon/PylonIncludes.h>
 
 using namespace Pylon;
@@ -51,7 +52,9 @@ int process() {
 
     CGrabResultPtr ptrGrabResult;
 
-    camera->StartGrabbing(5);
+    ofstream file("data_Mono12Packed.dat");
+
+    camera->StartGrabbing(1);
     while (camera->IsGrabbing()) {
         camera->RetrieveResult(5000, ptrGrabResult, TimeoutHandling_Return);
         //
@@ -62,6 +65,9 @@ int process() {
             cout << "PayloadType: " << ptrGrabResult->GetPayloadType() << endl;
             cout << "PixelType: " << hex << ptrGrabResult->GetPixelType() << dec << endl;
             cout << "BufferSize: " << ptrGrabResult->GetBufferSize() << endl;
+
+            file.write((const char*)ptrGrabResult->GetBuffer(), ptrGrabResult->GetBufferSize());
+
             const uint8_t* pImageBuffer = (uint8_t*)ptrGrabResult->GetBuffer();
             cout << "Gray value of first pixel: " << (uint32_t)pImageBuffer[0] << endl << endl;
         } else {
@@ -69,6 +75,8 @@ int process() {
                  << ptrGrabResult->GetErrorDescription() << endl;
         }
     }
+
+    file.close();
 
     delete camera;
     camera = nullptr;
