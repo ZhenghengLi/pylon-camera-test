@@ -29,14 +29,17 @@ int main() {
 
     CGrabResultPtr ptrGrabResult;
 
-    camera->StartGrabbing(1000);
+    camera->StartGrabbing(5000);
     while (camera->IsGrabbing()) {
         camera->RetrieveResult(5000, ptrGrabResult, TimeoutHandling_Return);
         //
         if (ptrGrabResult->GrabSucceeded()) {
             // Access the image data.
-            cout << "SizeX: " << ptrGrabResult->GetWidth() << endl;
-            cout << "SizeY: " << ptrGrabResult->GetHeight() << endl;
+            // cout << "SizeX: " << ptrGrabResult->GetWidth() << endl;
+            // cout << "SizeY: " << ptrGrabResult->GetHeight() << endl;
+            // cout << "PayloadType: " << ptrGrabResult->GetPayloadType() << endl;
+            // cout << "PixelType: " << hex << ptrGrabResult->GetPixelType() << dec << endl;
+            // cout << "BufferSize: " << ptrGrabResult->GetBufferSize() << endl;
             const uint8_t* pImageBuffer = (uint8_t*)ptrGrabResult->GetBuffer();
             cout << "Gray value of first pixel: " << (uint32_t)pImageBuffer[0] << endl << endl;
         } else {

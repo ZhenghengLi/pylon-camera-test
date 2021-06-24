@@ -1,6 +1,7 @@
 df_standard_exe(demo
     INCLUDE_DIRS /opt/pylon/include
     LINK_DIRS /opt/pylon/lib
+    LINK_OPTIONS -Wl,-E
     LIBRARIES
         pylonbase
         pylonutility
