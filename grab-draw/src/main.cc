@@ -1,5 +1,6 @@
 #include <iostream>
 #include <QApplication>
+#include <QProgressDialog>
 
 #include "MainWindow.hh"
 

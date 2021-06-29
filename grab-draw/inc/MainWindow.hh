@@ -10,6 +10,7 @@ public:
     MainWindow();
 
 protected:
+    void createMenus();
     void closeEvent(QCloseEvent* event) override;
 };
 
