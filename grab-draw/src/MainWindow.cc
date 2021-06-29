@@ -7,7 +7,7 @@
 
 MainWindow::MainWindow() {
     resize(1000, 700);
-    setWindowIcon(QIcon(":/images/logo.png"));
+    setWindowIcon(QIcon(":/icons/logo.png"));
     createMenus();
 }
 
