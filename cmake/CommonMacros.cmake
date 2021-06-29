@@ -4,7 +4,8 @@ function(df_standard_exe target_name)
 
     file(GLOB sources src/*)
     file(GLOB headers inc/*)
-    add_executable(${target_name} ${sources} ${headers})
+    file(GLOB resources rsc/*.qrc)
+    add_executable(${target_name} ${sources} ${headers} ${resources})
 
     target_include_directories(${target_name} PRIVATE inc ${ARG_INCLUDE_DIRS})
     target_compile_definitions(${target_name} PRIVATE ${ARG_DEFINITIONS})
