@@ -17,6 +17,12 @@ if (CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
     set(CMAKE_INSTALL_PREFIX ${CMAKE_BINARY_DIR}/package CACHE PATH "" FORCE)
 endif()
 
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTORCC ON)
+set(CMAKE_AUTOUIC ON)
+
+find_package(Qt5 COMPONENTS Widgets REQUIRED)
+
 set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
 include(CommonMacros)
 
@@ -24,4 +30,5 @@ find_package(CUDAToolkit REQUIRED)
 find_package(Threads REQUIRED)
 
 add_subdirectory(demo)
+add_subdirectory(grab-draw)
 
