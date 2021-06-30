@@ -1,11 +1,10 @@
 #include "ImageGrabber.hh"
 #include <iostream>
+#include <QDebug>
 
 using namespace std;
 
-ImageGrabber::ImageGrabber() {
-    //
-}
+ImageGrabber::ImageGrabber() { camera_ = nullptr; }
 
 ImageGrabber::~ImageGrabber() {}
 
@@ -35,9 +34,27 @@ void ImageGrabber::closeCamera_() {
     }
 }
 
-void ImageGrabber::open() {}
+void ImageGrabber::open() {
+    try {
+        openCamera_();
+        emit cameraOpened();
+    } catch (const Pylon::GenericException& e) {
+        qCritical() << "Pylon Error: " << e.GetDescription();
+    } catch (const std::exception& e) {
+        qCritical() << "Error: " << e.what();
+    }
+}
 
-void ImageGrabber::close() {}
+void ImageGrabber::close() {
+    try {
+        closeCamera_();
+        emit cameraClosed();
+    } catch (const Pylon::GenericException& e) {
+        qCritical() << "Pylon Error: " << e.GetDescription();
+    } catch (const std::exception& e) {
+        qCritical() << "Error: " << e.what();
+    }
+}
 
 void ImageGrabber::start() {}
 

@@ -20,16 +20,17 @@ public slots:
 
 signals:
     void cameraOpened();
-    void cameraClose();
+    void cameraClosed();
     void grabbingStarted();
     void grabbingStopped();
+    void imageGrabbed(QImage);
 
 protected:
     void openCamera_();
     void closeCamera_();
 
 private:
-    Pylon::CInstantCamera* camera_ = nullptr;
+    Pylon::CInstantCamera* camera_;
 };
 
 #endif

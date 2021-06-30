@@ -4,6 +4,9 @@
 #include <pylon/PylonIncludes.h>
 #include <QThread>
 #include <QImage>
+#include <atomic>
+
+using std::atomic_bool;
 
 class ImageGrabberThread : public QThread {
     Q_OBJECT
@@ -17,6 +20,10 @@ signals:
 
 protected:
     void run() override;
+    atomic_bool run_flag_;
+
+private:
+    void doGrabbing_();
 
 private:
     Pylon::CInstantCamera* camera_;
