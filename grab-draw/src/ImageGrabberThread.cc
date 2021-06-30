@@ -82,8 +82,33 @@ void ImageGrabberThread::stopGrabbing() {
 }
 
 QImage ImageGrabberThread::grab2image_mono12packed(Pylon::CGrabResultPtr ptrGrabResult) {
-    QImage image(ptrGrabResult->GetWidth(), ptrGrabResult->GetHeight(), QImage::Format_Indexed8);
+    uint32_t pixel_width = ptrGrabResult->GetWidth();
+    uint32_t pixel_height = ptrGrabResult->GetHeight();
+    size_t stride_bytes = 0;
+    ptrGrabResult->GetStride(stride_bytes);
+
+    QImage image(pixel_width, pixel_height, QImage::Format_Indexed8);
     image.setColorCount(256);
+
+    for (size_t h = 0; h < pixel_height; h++) {
+        uint8_t* bufferRow = (uint8_t*)ptrGrabResult->GetBuffer() + h * stride_bytes;
+        uint8_t* scanline = (uint8_t*)image.scanLine(h);
+        for (size_t w = 0; w < pixel_width; w++) {
+            int start_bit = w * 12;
+            int idx_B = start_bit / 8;
+            int idx_b = start_bit % 8;
+            int pixel_value = 0;
+            if (idx_b == 0) {
+                pixel_value |= bufferRow[idx_B] << 4;
+                pixel_value |= bufferRow[idx_B + 1] >> 4;
+            } else {
+                pixel_value |= bufferRow[idx_B + 1] << 4;
+                pixel_value |= bufferRow[idx_B] & 0xF;
+            }
+            scanline[w] = pixel_value * 256 / 4096;
+        }
+    }
+
     return image;
 }
 
