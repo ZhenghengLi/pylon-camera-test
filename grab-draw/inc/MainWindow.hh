@@ -23,9 +23,11 @@ private: // actions
     QAction* aboutQtAction_;
     QAction* startAction_;
     QAction* stopAction_;
+    QAction* openAction_;
+    QAction* closeAction_;
 
 private: // toolbars
-    QToolBar* actionToolBar_;
+    QToolBar* operationToolBar_;
 };
 
 #endif
