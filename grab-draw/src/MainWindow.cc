@@ -4,6 +4,8 @@
 #include <QMenu>
 #include <QToolBar>
 #include <QApplication>
+#include <QLabel>
+#include <QScrollArea>
 
 MainWindow::MainWindow() {
 
@@ -13,6 +15,12 @@ MainWindow::MainWindow() {
     imageGrabber_ = new ImageGrabber(this);
     imageCanvas_ = new ImageCanvas(this);
     connect(imageGrabber_, &ImageGrabber::imageGrabbed, imageCanvas_, &ImageCanvas::drawImage);
+
+    QScrollArea* scrollArea = new QScrollArea();
+    scrollArea->setBackgroundRole(QPalette::Dark);
+    scrollArea->setWidget(imageCanvas_);
+
+    setCentralWidget(scrollArea);
 
     createActions();
     createMenus();
