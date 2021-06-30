@@ -4,7 +4,10 @@
 
 using namespace std;
 
-ImageGrabber::ImageGrabber() { camera_ = nullptr; }
+ImageGrabber::ImageGrabber() {
+    camera_ = nullptr;
+    connect(&imageGrabberThread_, &ImageGrabberThread::imageGrabbed, this, &ImageGrabber::imageGrabbed);
+}
 
 ImageGrabber::~ImageGrabber() {}
 
@@ -26,7 +29,10 @@ void ImageGrabber::openCamera_() {
     cout << "camera opened on device: " << devinfo.GetFullName() << endl;
 
     GenApi::INodeMap& nodemap = camera_->GetNodeMap();
-    Pylon::CEnumParameter(nodemap, "PixelFormat").SetValue("Mono12Packed");
+
+    // Pylon::CEnumParameter(nodemap, "PixelFormat").SetValue("Mono12Packed");
+    // Pylon::CEnumParameter(nodemap, "PixelFormat").SetValue("Mono12");
+    Pylon::CEnumParameter(nodemap, "PixelFormat").SetValue("Mono8");
 }
 
 void ImageGrabber::closeCamera_() {

@@ -28,6 +28,9 @@ protected:
 
 private:
     void doGrabbing_();
+    QImage grab2image_mono12packed(Pylon::CGrabResultPtr ptrGrabResult);
+    QImage grab2image_mono12(Pylon::CGrabResultPtr ptrGrabResult);
+    QImage grab2image_mono8(Pylon::CGrabResultPtr ptrGrabResult);
 
 private:
     Pylon::CInstantCamera* camera_;
