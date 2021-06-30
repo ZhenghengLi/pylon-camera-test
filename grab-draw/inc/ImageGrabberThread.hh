@@ -12,8 +12,12 @@ class ImageGrabberThread : public QThread {
     Q_OBJECT
 
 public:
-    ImageGrabberThread(Pylon::CInstantCamera* c);
+    ImageGrabberThread();
     ~ImageGrabberThread();
+
+public slots:
+    void startGrabbing(Pylon::CInstantCamera* c);
+    void stopGrabbing();
 
 signals:
     void imageGrabbed(QImage);

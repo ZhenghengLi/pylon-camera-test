@@ -35,7 +35,10 @@ void MainWindow::createActions() {
     connect(closeAction_, SIGNAL(triggered()), &imageGrabber_, SLOT(close()));
 
     startAction_ = new QAction(tr("Start"), this);
+    connect(startAction_, SIGNAL(triggered()), &imageGrabber_, SLOT(start()));
+
     stopAction_ = new QAction(tr("Stop"), this);
+    connect(stopAction_, SIGNAL(triggered()), &imageGrabber_, SLOT(stop()));
 }
 
 void MainWindow::createMenus() {

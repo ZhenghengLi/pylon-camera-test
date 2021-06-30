@@ -4,6 +4,7 @@
 #include <pylon/PylonIncludes.h>
 #include <QObject>
 #include <QImage>
+#include "ImageGrabberThread.hh"
 
 class ImageGrabber : public QObject {
     Q_OBJECT
@@ -31,6 +32,7 @@ protected:
 
 private:
     Pylon::CInstantCamera* camera_;
+    ImageGrabberThread imageGrabberThread_;
 };
 
 #endif

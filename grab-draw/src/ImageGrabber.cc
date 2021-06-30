@@ -10,6 +10,7 @@ ImageGrabber::~ImageGrabber() {}
 
 void ImageGrabber::openCamera_() {
     if (camera_ != nullptr) return;
+    if (imageGrabberThread_.isRunning()) return;
 
     Pylon::CTlFactory& tlFactory = Pylon::CTlFactory::GetInstance();
     Pylon::DeviceInfoList_t lstDevices;
@@ -29,12 +30,13 @@ void ImageGrabber::openCamera_() {
 }
 
 void ImageGrabber::closeCamera_() {
-    if (camera_ != nullptr) {
-        camera_->Close();
-        delete camera_;
-        camera_ = nullptr;
-        cout << "camera closed" << endl;
-    }
+    if (camera_ == nullptr) return;
+    if (imageGrabberThread_.isRunning()) return;
+
+    camera_->Close();
+    delete camera_;
+    camera_ = nullptr;
+    cout << "camera closed" << endl;
 }
 
 void ImageGrabber::open() {
@@ -59,6 +61,12 @@ void ImageGrabber::close() {
     }
 }
 
-void ImageGrabber::start() {}
+void ImageGrabber::start() {
+    if (camera_ == nullptr) return;
+    imageGrabberThread_.startGrabbing(camera_);
+}
 
-void ImageGrabber::stop() {}
+void ImageGrabber::stop() {
+    if (camera_ == nullptr) return;
+    imageGrabberThread_.stopGrabbing();
+}

@@ -2,19 +2,23 @@
 #include <iostream>
 #include <QtGlobal>
 #include <QDebug>
+#include <iostream>
 
-ImageGrabberThread::ImageGrabberThread(Pylon::CInstantCamera* c) { camera_ = c; }
+using namespace std;
 
-ImageGrabberThread::~ImageGrabberThread() {
+ImageGrabberThread::ImageGrabberThread() {
     run_flag_ = false;
     camera_ = nullptr;
 }
 
+ImageGrabberThread::~ImageGrabberThread() {}
+
 void ImageGrabberThread::run() {
     if (camera_ == nullptr) return;
     try {
-        run_flag_ = true;
+        cout << "grabbing ..." << endl;
         doGrabbing_();
+        cout << "grabbing finished." << endl;
     } catch (const Pylon::GenericException& e) {
         qCritical() << "Pylon Error: " << e.GetDescription();
     } catch (const std::exception& e) {
@@ -23,6 +27,8 @@ void ImageGrabberThread::run() {
 }
 
 void ImageGrabberThread::doGrabbing_() {
+    if (camera_ == nullptr) return;
+
     camera_->StartGrabbing();
 
     Pylon::CGrabResultPtr ptrGrabResult;
@@ -45,4 +51,15 @@ void ImageGrabberThread::doGrabbing_() {
     }
 
     camera_->StopGrabbing();
+}
+
+void ImageGrabberThread::startGrabbing(Pylon::CInstantCamera* c) {
+    run_flag_ = true;
+    camera_ = c;
+    start();
+}
+
+void ImageGrabberThread::stopGrabbing() {
+    run_flag_ = false;
+    wait();
 }
