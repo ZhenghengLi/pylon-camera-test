@@ -11,6 +11,8 @@ MainWindow::MainWindow() {
     setWindowIcon(QIcon(":/icons/logo.png"));
 
     imageGrabber_ = new ImageGrabber(this);
+    imageCanvas_ = new ImageCanvas(this);
+    connect(imageGrabber_, &ImageGrabber::imageGrabbed, imageCanvas_, &ImageCanvas::drawImage);
 
     createActions();
     createMenus();

@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QAction>
 #include "ImageGrabber.hh"
+#include "ImageCanvas.hh"
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
@@ -32,6 +33,7 @@ private: // toolbars
 
 private: // qobjects
     ImageGrabber* imageGrabber_;
+    ImageCanvas* imageCanvas_;
 };
 
 #endif

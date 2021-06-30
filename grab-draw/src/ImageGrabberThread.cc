@@ -38,26 +38,26 @@ void ImageGrabberThread::doGrabbing_() {
         //
         if (ptrGrabResult->GrabSucceeded()) {
             // Access the image data.
-            std::cout << "SizeX: " << ptrGrabResult->GetWidth() << std::endl;
-            std::cout << "SizeY: " << ptrGrabResult->GetHeight() << std::endl;
-            std::cout << "PayloadType: " << ptrGrabResult->GetPayloadType() << std::endl;
-            std::cout << "PixelType: " << std::hex << ptrGrabResult->GetPixelType() << std::dec << std::endl;
-            std::cout << "BufferSize: " << ptrGrabResult->GetBufferSize() << std::endl;
+            // std::cout << "SizeX: " << ptrGrabResult->GetWidth() << std::endl;
+            // std::cout << "SizeY: " << ptrGrabResult->GetHeight() << std::endl;
+            // std::cout << "PayloadType: " << ptrGrabResult->GetPayloadType() << std::endl;
+            // std::cout << "PixelType: " << std::hex << ptrGrabResult->GetPixelType() << std::dec << std::endl;
+            // std::cout << "BufferSize: " << ptrGrabResult->GetBufferSize() << std::endl;
 
-            size_t stride = 0;
-            ptrGrabResult->GetStride(stride);
-            std::cout << "stride: " << stride << endl;
+            // size_t stride = 0;
+            // ptrGrabResult->GetStride(stride);
+            // std::cout << "stride: " << stride << endl;
 
             QImage image(ptrGrabResult->GetWidth(), ptrGrabResult->GetHeight(), QImage::Format_Indexed8);
 
             if (ptrGrabResult->GetPixelType() == Pylon::PixelType_Mono12packed) {
-                std::cout << "type: Mono12Packed" << endl;
+                // std::cout << "type: Mono12Packed" << endl;
                 emit imageGrabbed(grab2image_mono12packed(ptrGrabResult));
             } else if (ptrGrabResult->GetPixelType() == Pylon::PixelType_Mono12) {
-                cout << "type: Mono12" << endl;
+                // cout << "type: Mono12" << endl;
                 emit imageGrabbed(grab2image_mono12(ptrGrabResult));
             } else if (ptrGrabResult->GetPixelType() == Pylon::PixelType_Mono8) {
-                cout << "type: Mono8" << endl;
+                // cout << "type: Mono8" << endl;
                 emit imageGrabbed(grab2image_mono8(ptrGrabResult));
             }
 
