@@ -32,8 +32,8 @@ void ImageGrabber::openCamera_() {
     GenApi::INodeMap& nodemap = camera_->GetNodeMap();
 
     // Pylon::CEnumParameter(nodemap, "PixelFormat").SetValue("Mono12Packed");
-    // Pylon::CEnumParameter(nodemap, "PixelFormat").SetValue("Mono12");
-    Pylon::CEnumParameter(nodemap, "PixelFormat").SetValue("Mono8");
+    Pylon::CEnumParameter(nodemap, "PixelFormat").SetValue("Mono12");
+    // Pylon::CEnumParameter(nodemap, "PixelFormat").SetValue("Mono8");
 }
 
 void ImageGrabber::closeCamera_() {

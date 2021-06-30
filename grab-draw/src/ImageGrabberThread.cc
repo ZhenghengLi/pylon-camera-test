@@ -88,8 +88,26 @@ QImage ImageGrabberThread::grab2image_mono12packed(Pylon::CGrabResultPtr ptrGrab
 }
 
 QImage ImageGrabberThread::grab2image_mono12(Pylon::CGrabResultPtr ptrGrabResult) {
-    QImage image(ptrGrabResult->GetWidth(), ptrGrabResult->GetHeight(), QImage::Format_Indexed8);
+    uint32_t pixel_width = ptrGrabResult->GetWidth();
+    uint32_t pixel_height = ptrGrabResult->GetHeight();
+    size_t stride_bytes = 0;
+    ptrGrabResult->GetStride(stride_bytes);
+
+    QImage image(pixel_width, pixel_height, QImage::Format_Indexed8);
     image.setColorCount(256);
+
+    for (size_t h = 0; h < pixel_height; h++) {
+        uint8_t* bufferRow = (uint8_t*)ptrGrabResult->GetBuffer() + h * stride_bytes;
+        uint8_t* scanline = (uint8_t*)image.scanLine(h);
+        for (size_t w = 0; w < pixel_width; w++) {
+            size_t i = w * 2;
+            int pixel_value = 0;
+            pixel_value |= bufferRow[i + 1];
+            pixel_value <<= 8;
+            pixel_value += bufferRow[i];
+            scanline[w] = pixel_value * 256 / 4096;
+        }
+    }
 
     return image;
 }
