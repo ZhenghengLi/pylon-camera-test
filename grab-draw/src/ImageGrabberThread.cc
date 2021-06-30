@@ -105,9 +105,10 @@ QImage ImageGrabberThread::grab2image_mono8(Pylon::CGrabResultPtr ptrGrabResult)
 
     for (size_t h = 0; h < pixel_height; h++) {
         uint8_t* bufferRow = (uint8_t*)ptrGrabResult->GetBuffer() + h * stride_bytes;
+        uint8_t* scanline = (uint8_t*)image.scanLine(h);
         for (size_t w = 0; w < pixel_width; w++) {
             uint pixel_value = bufferRow[w];
-            image.setPixel(w, h, pixel_value);
+            scanline[w] = pixel_value;
         }
     }
 
