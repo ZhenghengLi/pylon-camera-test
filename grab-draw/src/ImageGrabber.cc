@@ -9,7 +9,7 @@ ImageGrabber::ImageGrabber() {
     connect(&imageGrabberThread_, &ImageGrabberThread::imageGrabbed, this, &ImageGrabber::imageGrabbed);
 }
 
-ImageGrabber::~ImageGrabber() {}
+ImageGrabber::~ImageGrabber() { closeCamera_(); }
 
 void ImageGrabber::openCamera_() {
     if (camera_ != nullptr) return;
@@ -37,7 +37,9 @@ void ImageGrabber::openCamera_() {
 
 void ImageGrabber::closeCamera_() {
     if (camera_ == nullptr) return;
-    if (imageGrabberThread_.isRunning()) return;
+    if (imageGrabberThread_.isRunning()) {
+        imageGrabberThread_.stopGrabbing();
+    }
 
     camera_->Close();
     delete camera_;
@@ -50,7 +52,7 @@ void ImageGrabber::open() {
         openCamera_();
         emit cameraOpened();
     } catch (const Pylon::GenericException& e) {
-        qCritical() << "Pylon Error: " << e.GetDescription();
+        qCritical() << "Pylon Error 1: " << e.GetDescription();
     } catch (const std::exception& e) {
         qCritical() << "Error: " << e.what();
     }
@@ -61,7 +63,7 @@ void ImageGrabber::close() {
         closeCamera_();
         emit cameraClosed();
     } catch (const Pylon::GenericException& e) {
-        qCritical() << "Pylon Error: " << e.GetDescription();
+        qCritical() << "Pylon Error 2: " << e.GetDescription();
     } catch (const std::exception& e) {
         qCritical() << "Error: " << e.what();
     }

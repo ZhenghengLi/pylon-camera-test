@@ -11,7 +11,7 @@ ImageGrabberThread::ImageGrabberThread() {
     camera_ = nullptr;
 }
 
-ImageGrabberThread::~ImageGrabberThread() {}
+ImageGrabberThread::~ImageGrabberThread() { stopGrabbing(); }
 
 void ImageGrabberThread::run() {
     if (camera_ == nullptr) return;
@@ -20,7 +20,7 @@ void ImageGrabberThread::run() {
         doGrabbing_();
         cout << "grabbing finished." << endl;
     } catch (const Pylon::GenericException& e) {
-        qCritical() << "Pylon Error: " << e.GetDescription();
+        qCritical() << "Pylon Error 3: " << e.GetDescription();
     } catch (const std::exception& e) {
         qCritical() << "Error: " << e.what();
     }

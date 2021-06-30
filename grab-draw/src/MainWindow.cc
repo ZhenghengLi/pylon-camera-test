@@ -18,7 +18,7 @@ MainWindow::MainWindow() {
 MainWindow::~MainWindow() {}
 
 void MainWindow::closeEvent(QCloseEvent* event) {
-    //
+    imageGrabber_.close();
     std::cout << "Main Window is closed." << std::endl;
 }
 
