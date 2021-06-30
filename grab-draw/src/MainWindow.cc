@@ -30,17 +30,12 @@ void MainWindow::createActions() {
 
     openAction_ = new QAction(tr("Open"), this);
     connect(openAction_, SIGNAL(triggered()), &imageGrabber_, SLOT(open()));
-    connect(&imageGrabber_, &ImageGrabber::cameraOpened, [&]() { openAction_->setDisabled(true); });
 
     closeAction_ = new QAction(tr("Close"), this);
-    closeAction_->setDisabled(true);
     connect(closeAction_, SIGNAL(triggered()), &imageGrabber_, SLOT(close()));
-    connect(&imageGrabber_, &ImageGrabber::cameraClosed, [&]() { closeAction_->setDisabled(true); });
 
     startAction_ = new QAction(tr("Start"), this);
-    startAction_->setDisabled(true);
     stopAction_ = new QAction(tr("Stop"), this);
-    stopAction_->setDisabled(true);
 }
 
 void MainWindow::createMenus() {

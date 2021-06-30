@@ -9,6 +9,8 @@ ImageGrabber::ImageGrabber() { camera_ = nullptr; }
 ImageGrabber::~ImageGrabber() {}
 
 void ImageGrabber::openCamera_() {
+    if (camera_ != nullptr) return;
+
     Pylon::CTlFactory& tlFactory = Pylon::CTlFactory::GetInstance();
     Pylon::DeviceInfoList_t lstDevices;
     tlFactory.EnumerateDevices(lstDevices);
@@ -31,6 +33,7 @@ void ImageGrabber::closeCamera_() {
         camera_->Close();
         delete camera_;
         camera_ = nullptr;
+        cout << "camera closed" << endl;
     }
 }
 
