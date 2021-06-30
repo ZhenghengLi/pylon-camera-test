@@ -14,6 +14,9 @@ public:
 public slots:
     void drawImage(QImage image);
 
+protected:
+    void paintEvent(QPaintEvent* event) override;
+
 private:
     QImage currentImage_;
 };
