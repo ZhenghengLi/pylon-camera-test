@@ -2,6 +2,7 @@
 #include <iostream>
 #include <QMenuBar>
 #include <QMenu>
+#include <QToolBar>
 #include <QApplication>
 
 MainWindow::MainWindow() {
@@ -11,6 +12,7 @@ MainWindow::MainWindow() {
 
     createActions();
     createMenus();
+    createToolBars();
 }
 
 void MainWindow::closeEvent(QCloseEvent* event) {
@@ -19,12 +21,23 @@ void MainWindow::closeEvent(QCloseEvent* event) {
 }
 
 void MainWindow::createActions() {
-    aboutQtAction = new QAction(tr("About &Qt"), this);
-    aboutQtAction->setStatusTip(tr("Show the Qt library's About box."));
-    connect(aboutQtAction, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
+    // about
+    aboutQtAction_ = new QAction(tr("About &Qt"), this);
+    aboutQtAction_->setStatusTip(tr("Show the Qt library's About box."));
+    connect(aboutQtAction_, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
+    // start
+    startAction_ = new QAction(tr("Start"), this);
+    // stop
+    stopAction_ = new QAction(tr("Stop"), this);
 }
 
 void MainWindow::createMenus() {
     QMenu* aboutMenu = menuBar()->addMenu(tr("&About"));
-    aboutMenu->addAction(aboutQtAction);
+    aboutMenu->addAction(aboutQtAction_);
+}
+
+void MainWindow::createToolBars() {
+    actionToolBar_ = addToolBar(tr("Actions"));
+    actionToolBar_->addAction(startAction_);
+    actionToolBar_->addAction(stopAction_);
 }

@@ -16,9 +16,15 @@ protected:
 private:
     void createActions();
     void createMenus();
+    void createToolBars();
 
 private: // actions
-    QAction* aboutQtAction;
+    QAction* aboutQtAction_;
+    QAction* startAction_;
+    QAction* stopAction_;
+
+private: // toolbars
+    QToolBar* actionToolBar_;
 };
 
 #endif
