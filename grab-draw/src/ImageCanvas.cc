@@ -5,6 +5,7 @@
 
 ImageCanvas::ImageCanvas(QWidget* parent) : QWidget(parent) {
     //
+    resize(500, 500);
 }
 
 ImageCanvas::~ImageCanvas() {
@@ -14,10 +15,11 @@ ImageCanvas::~ImageCanvas() {
 void ImageCanvas::drawImage(QImage image) {
     currentImage_ = image;
     if (currentImage_.width() < 1) return;
+
     // std::cout << "draw image with first pixel: " << image.pixelIndex(0, 0) << std::endl;
     // std::cout << image.width() << ", " << image.height() << std::endl;
-    float ratio = 0.5;
-    resize(image.width() * ratio, image.height() * ratio);
+    // float ratio = 0.5;
+    // resize(image.width() * ratio, image.height() * ratio);
 
     update();
 }
@@ -29,7 +31,23 @@ void ImageCanvas::paintEvent(QPaintEvent* event) {
         currentImage_.setColor(i, qRgb(i, i, i));
     }
     QPixmap pixmap = QPixmap::fromImage(currentImage_);
+    if (pixmap.width() < 1) return;
 
-    // painter.fillRect(0, 0, this->width(), this->height(), Qt::white);
-    painter.drawPixmap(0, 0, this->width(), this->height(), pixmap);
+    int width(0), height(0);
+    int owidth(0), oheight(0);
+
+    double win_ratio = (double)this->height() / (double)this->width();
+    double pix_ratio = (double)pixmap.height() / (double)pixmap.width();
+
+    if (win_ratio > pix_ratio) {
+        width = this->width();
+        height = width * pix_ratio;
+        oheight = (this->height() - height) / 2;
+    } else {
+        height = this->height();
+        width = height / pix_ratio;
+        owidth = (this->width() - width) / 2;
+    }
+
+    painter.drawPixmap(owidth, oheight, width, height, pixmap);
 }

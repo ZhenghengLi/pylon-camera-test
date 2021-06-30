@@ -18,6 +18,8 @@ MainWindow::MainWindow() {
 
     QScrollArea* scrollArea = new QScrollArea();
     scrollArea->setBackgroundRole(QPalette::Dark);
+    scrollArea->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
+    scrollArea->setWidgetResizable(true);
     scrollArea->setWidget(imageCanvas_);
 
     setCentralWidget(scrollArea);
