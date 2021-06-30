@@ -10,6 +10,8 @@ MainWindow::MainWindow() {
     resize(1000, 700);
     setWindowIcon(QIcon(":/icons/logo.png"));
 
+    imageGrabber_ = new ImageGrabber(this);
+
     createActions();
     createMenus();
     createToolBars();
@@ -18,7 +20,7 @@ MainWindow::MainWindow() {
 MainWindow::~MainWindow() {}
 
 void MainWindow::closeEvent(QCloseEvent* event) {
-    imageGrabber_.close();
+    imageGrabber_->close();
     std::cout << "Main Window is closed." << std::endl;
 }
 
@@ -29,16 +31,16 @@ void MainWindow::createActions() {
     connect(aboutQtAction_, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
 
     openAction_ = new QAction(tr("Open"), this);
-    connect(openAction_, SIGNAL(triggered()), &imageGrabber_, SLOT(open()));
+    connect(openAction_, SIGNAL(triggered()), imageGrabber_, SLOT(open()));
 
     closeAction_ = new QAction(tr("Close"), this);
-    connect(closeAction_, SIGNAL(triggered()), &imageGrabber_, SLOT(close()));
+    connect(closeAction_, SIGNAL(triggered()), imageGrabber_, SLOT(close()));
 
     startAction_ = new QAction(tr("Start"), this);
-    connect(startAction_, SIGNAL(triggered()), &imageGrabber_, SLOT(start()));
+    connect(startAction_, SIGNAL(triggered()), imageGrabber_, SLOT(start()));
 
     stopAction_ = new QAction(tr("Stop"), this);
-    connect(stopAction_, SIGNAL(triggered()), &imageGrabber_, SLOT(stop()));
+    connect(stopAction_, SIGNAL(triggered()), imageGrabber_, SLOT(stop()));
 }
 
 void MainWindow::createMenus() {

@@ -10,7 +10,7 @@ class ImageGrabber : public QObject {
     Q_OBJECT
 
 public:
-    ImageGrabber();
+    ImageGrabber(QObject* parent = nullptr);
     ~ImageGrabber();
 
 public slots:
@@ -32,7 +32,7 @@ protected:
 
 private:
     Pylon::CInstantCamera* camera_;
-    ImageGrabberThread imageGrabberThread_;
+    ImageGrabberThread* imageGrabberThread_;
 };
 
 #endif

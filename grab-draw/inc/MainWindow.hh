@@ -31,7 +31,7 @@ private: // toolbars
     QToolBar* operationToolBar_;
 
 private: // qobjects
-    ImageGrabber imageGrabber_;
+    ImageGrabber* imageGrabber_;
 };
 
 #endif

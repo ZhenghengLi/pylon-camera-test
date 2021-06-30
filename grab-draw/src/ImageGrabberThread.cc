@@ -6,7 +6,7 @@
 
 using namespace std;
 
-ImageGrabberThread::ImageGrabberThread() {
+ImageGrabberThread::ImageGrabberThread(QObject* parent) : QThread(parent) {
     run_flag_ = false;
     camera_ = nullptr;
 }

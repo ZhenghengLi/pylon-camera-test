@@ -4,16 +4,17 @@
 
 using namespace std;
 
-ImageGrabber::ImageGrabber() {
+ImageGrabber::ImageGrabber(QObject* parent) : QObject(parent) {
     camera_ = nullptr;
-    connect(&imageGrabberThread_, &ImageGrabberThread::imageGrabbed, this, &ImageGrabber::imageGrabbed);
+    imageGrabberThread_ = new ImageGrabberThread(this);
+    connect(imageGrabberThread_, &ImageGrabberThread::imageGrabbed, this, &ImageGrabber::imageGrabbed);
 }
 
 ImageGrabber::~ImageGrabber() { closeCamera_(); }
 
 void ImageGrabber::openCamera_() {
     if (camera_ != nullptr) return;
-    if (imageGrabberThread_.isRunning()) return;
+    if (imageGrabberThread_->isRunning()) return;
 
     Pylon::CTlFactory& tlFactory = Pylon::CTlFactory::GetInstance();
     Pylon::DeviceInfoList_t lstDevices;
@@ -37,8 +38,8 @@ void ImageGrabber::openCamera_() {
 
 void ImageGrabber::closeCamera_() {
     if (camera_ == nullptr) return;
-    if (imageGrabberThread_.isRunning()) {
-        imageGrabberThread_.stopGrabbing();
+    if (imageGrabberThread_->isRunning()) {
+        imageGrabberThread_->stopGrabbing();
     }
 
     camera_->Close();
@@ -71,10 +72,10 @@ void ImageGrabber::close() {
 
 void ImageGrabber::start() {
     if (camera_ == nullptr) return;
-    imageGrabberThread_.startGrabbing(camera_);
+    imageGrabberThread_->startGrabbing(camera_);
 }
 
 void ImageGrabber::stop() {
     if (camera_ == nullptr) return;
-    imageGrabberThread_.stopGrabbing();
+    imageGrabberThread_->stopGrabbing();
 }

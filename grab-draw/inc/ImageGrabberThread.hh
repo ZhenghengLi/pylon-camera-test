@@ -12,7 +12,7 @@ class ImageGrabberThread : public QThread {
     Q_OBJECT
 
 public:
-    ImageGrabberThread();
+    ImageGrabberThread(QObject* parent = nullptr);
     ~ImageGrabberThread();
 
 public slots:
