@@ -15,6 +15,8 @@ MainWindow::MainWindow() {
     createToolBars();
 }
 
+MainWindow::~MainWindow() {}
+
 void MainWindow::closeEvent(QCloseEvent* event) {
     //
     std::cout << "Main Window is closed." << std::endl;
