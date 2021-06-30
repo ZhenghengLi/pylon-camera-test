@@ -9,14 +9,12 @@ ImageGrabber::ImageGrabber() {
 
 ImageGrabber::~ImageGrabber() {}
 
-bool ImageGrabber::openCamera() {
-    //
+void ImageGrabber::openCamera_() {
     Pylon::CTlFactory& tlFactory = Pylon::CTlFactory::GetInstance();
     Pylon::DeviceInfoList_t lstDevices;
     tlFactory.EnumerateDevices(lstDevices);
     if (lstDevices.empty()) {
-        cerr << "No devices found!" << endl;
-        return false;
+        throw RUNTIME_EXCEPTION("No devices found!");
     }
 
     camera_ = new Pylon::CInstantCamera(tlFactory.CreateDevice(lstDevices[0]));
@@ -27,14 +25,20 @@ bool ImageGrabber::openCamera() {
 
     GenApi::INodeMap& nodemap = camera_->GetNodeMap();
     Pylon::CEnumParameter(nodemap, "PixelFormat").SetValue("Mono12Packed");
-
-    return true;
 }
 
-void ImageGrabber::closeCamera() {
+void ImageGrabber::closeCamera_() {
     if (camera_ != nullptr) {
         camera_->Close();
         delete camera_;
         camera_ = nullptr;
     }
 }
+
+void ImageGrabber::open() {}
+
+void ImageGrabber::close() {}
+
+void ImageGrabber::start() {}
+
+void ImageGrabber::stop() {}
