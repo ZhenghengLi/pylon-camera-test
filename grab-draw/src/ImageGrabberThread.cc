@@ -37,18 +37,6 @@ void ImageGrabberThread::doGrabbing_() {
         camera_->RetrieveResult(5000, ptrGrabResult, Pylon::TimeoutHandling_Return);
         //
         if (ptrGrabResult->GrabSucceeded()) {
-            // Access the image data.
-            // std::cout << "SizeX: " << ptrGrabResult->GetWidth() << std::endl;
-            // std::cout << "SizeY: " << ptrGrabResult->GetHeight() << std::endl;
-            // std::cout << "PayloadType: " << ptrGrabResult->GetPayloadType() << std::endl;
-            // std::cout << "PixelType: " << std::hex << ptrGrabResult->GetPixelType() << std::dec << std::endl;
-            // std::cout << "BufferSize: " << ptrGrabResult->GetBufferSize() << std::endl;
-
-            // size_t stride = 0;
-            // ptrGrabResult->GetStride(stride);
-            // std::cout << "stride: " << stride << endl;
-
-            QImage image(ptrGrabResult->GetWidth(), ptrGrabResult->GetHeight(), QImage::Format_Indexed8);
 
             if (ptrGrabResult->GetPixelType() == Pylon::PixelType_Mono12packed) {
                 // std::cout << "type: Mono12Packed" << endl;
